@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+
+</head>
+<body>
+    <div id="app">
+        <h1>칼로리 관리</h1>
+        <input  v-model="cal"  type="text" placeholder="섭취한 칼로리를 입력하세요" />
+        <button v-on:click="leaveCal">입력</button>
+        <p v-if="myKcal.length===0">아직 입력하지 않았습니다.</p>
+        <div  v-else>
+        <h2>칼로리 기록</h2>
+        <ul>
+            <li v-for="(item ,i) in myKcal" :key="item.date">
+                {{item.date}} : {{item.value + 'kcal'}}
+                <input type="text" :value="item.date" />
+                <a href="" v-on:click.prevent="deleteItem(i)">삭제</a>
+            </li>
+        </ul>
+        </div>
+       </div>
+
+<script>
+    const app = Vue.createApp({
+    data() {
+        return {
+            cal:0,
+            myKcal: [
+                { date: '2022-11-12', value: 1790 },
+                { date: '2022-11-13', value: 1800 },
+                { date: '2022-11-14', value: 1620 },
+            ],
+        };
+    },
+    methods:{
+        leaveCal(){
+            const TIME_ZONE = 3240 * 10000;
+            let today = new Date(+new Date() + TIME_ZONE).toISOString().split('T')[0];
+            let date_cal={
+                date: today,
+                value: this.cal,
+            }
+            this.myKcal.push(date_cal)
+            this.cal=""
+        },
+        deleteItem(index) {
+            this.myKcal.splice(index, 1);
+        },
+    }
+    });
+    app.mount('#app');
+
+</script>
+</body>
+</html>

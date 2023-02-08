@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Vue시작</title>
+ <script src="https://unpkg.com/vue@3"></script>
+</head>
+<div id="app">
+ <input type="text" ="age"/>
+ <h1>저는 {{ age<30? '청년':'중년' }}입니다.</h1>
+ <p v-once  v-bind="속성개체" >{{aboutMe}}</p>
+ <p v-bind="속성개체" >{{aboutMe}}</p>
+ <div v-html="content"></div>
+ <button :disabled="여부">확인버튼</button>
+ <a href=""  v-on:click.prevent="addAge">나이 증가</a>
+</div>
+<script>
+ const instance =Vue.createApp({
+    data(){
+        return{
+        속성개체: { 
+            id:"yewon" ,
+            class: "yewon" ,
+            style:"color:red"
+        },
+            age: 49,
+            att:"title",
+            text: "오늘은 흐린 날씨다.",
+            content:'<strong>하하</strong>',
+            여부:false
+        };
+    },
+    computed:{
+        aboutMe(){
+            return `저의 나이는 ${this.age} 입니다.`
+        }
+    },
+    methods: {
+        addAge() {
+            this.age++;
+        }
+    },
+    mounted(){
+        console.log("")
+    }
+}
+)
+console.log(instance)
+instance.mount("#app")
+</script>
+</body>
+</html>
